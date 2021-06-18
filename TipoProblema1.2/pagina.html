@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notas</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <script src="validaciones.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Dropdown link
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div class="container-sm py-2">
+
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="card bg-dark text-white mx-2">
+          <div class="card-header">Ingreso de notas</div>
+          <div class="card-body bg-white">
+
+            <form id="form">
+              <div class="form-group">
+                <label>nota 1</label>
+                <input type="number" class="form-control mb-2" id="nota1" placeholder="ingrese nota 1" max="7" min="1"
+                  required onkeyup="validar()">
+                <div class="col col-lg-2" id="errorNota1">
+                  *
+                </div>
+              </div>
+              <div class="form-group">
+                <label>nota 2</label>
+                <input type="number" class="form-control mb-2" id="nota2" placeholder="ingrese nota 2" max="7" min="1"
+                  required onkeyup="validar()">
+                <div class="col col-lg-2" id="errorNota2">
+                  *
+                </div>
+              </div>
+              <div class="form-group">
+                <label>nota 3</label>
+                <input type="number" class="form-control mb-2" id="nota3" placeholder="ingrese nota 3" max="7" min="1"
+                  required onkeyup="validar()">
+                <div class="col col-lg-2" id="errorNota3">
+                  *
+                </div>
+              </div>
+              <div class="form-group">
+                <label>nota 4</label>
+                <input type="number" class="form-control mb-2" id="nota4" placeholder="ingrese nota 4" max="7" min="1"
+                  required onkeyup="validar()">
+                <div class="col col-lg-2" id="errorNota4">
+                  *
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Examen</label>
+                <input type="number" class="form-control mb-2" id="examen" placeholder="ingrese nota Examen" max="7"
+                  min="1" required onkeyup="validar()">
+                <div class="col col-lg-2" id="errorExamen">
+                  *
+                </div>
+              </div>
+              <button onclick="validar(), validarTodos(), promedio()" class="btn btn-primary" id="btn">Validar</button>
+            </form>
+
+
+          </div>
+        </div>
+
+        <h3 class="">Resultado</h3>
+        <input class="alert alert-primary" id="display" readonly>
+
+        <div>
+          <div class="alert alert-success" id="aprobado"></div>
+          <div class="alert alert-danger" id="reprobado"></div>
+        </div>
+
+        <script>
+          var btn = document.getElementById('btn');
+          btn.addEventListener("click", function promedio() {
+      
+            var nota1 = document.getElementById('nota1').value;
+            var nota2 = document.getElementById('nota2').value;
+            var nota3 = document.getElementById('nota3').value;
+            var nota4 = document.getElementById('nota4').value;
+            var examen = document.getElementById('examen').value;
+
+            var display = document.getElementById('display');
+
+            var cal = (parseFloat(nota1) + parseFloat(nota2) + parseFloat(nota3) + parseFloat(nota4)) / 4 * 0.60;
+
+            var exa = (parseFloat(examen) * 0.40)
+
+            var resultado = cal + exa;
+
+            if (resultado > 4) {
+
+              display.value = resultado;
+
+              document.getElementById('aprobado').innerHTML = "Aprobado";
+
+            } else {
+              display.value = resultado;
+              document.getElementById('reprobado').innerHTML += "Reprobado";
+            }
+
+          })
+        </script>
+
+</html>
