@@ -72,7 +72,6 @@ arreglo[5]="errorConfirmar";
   }
 
 
-
 function validarTodos(){
     var contador = 0;
     for(i=0; i<6; i++){
