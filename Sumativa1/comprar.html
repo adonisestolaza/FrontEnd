@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeerHouse</title>
+     <!-- Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+
+    <!-- Iconos-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+     <!-- Header footer-->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
+    </script>
+    <script>
+        $(function () {
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+        });
+    </script>
+
+
+<script>
+        window.onload = function () {
+
+          const baseDeDatos = [
+              {
+                  id: 1,
+                  nombre: 'Heinekek',
+                  precio: 1000,
+                  imagen: 'img/heineken.png'
+              },
+              {
+                  id: 2,
+                  nombre: 'Goose Island',
+                  precio: 1200,
+                  imagen: 'img/goose.jpeg'
+              },
+              {
+                  id: 3,
+                  nombre: 'Paulaner',
+                  precio: 2500,
+                  imagen: 'img/paulaner.png'
+              },
+              {
+                  id: 4,
+                  nombre: 'Blue Moon',
+                  precio: 1000,
+                  imagen: 'img/bluemoon.png'
+              }
+
+          ];
+
+          let carrito = [];
+          let total = 0;
+          const DOMitems = document.querySelector('#items');
+          const DOMcarrito = document.querySelector('#carrito');
+          const DOMtotal = document.querySelector('#total');
+          const DOMbotonVaciar = document.querySelector('#boton-vaciar');
+
+      
+          function renderizarProductos() {
+              baseDeDatos.forEach((info) => {
+    
+                  const miNodo = document.createElement('div');
+                  miNodo.classList.add('card', 'col-sm-4');
+
+                  const miNodoCardBody = document.createElement('div');
+                  miNodoCardBody.classList.add('card-body');
+
+                  const miNodoTitle = document.createElement('h5');
+                  miNodoTitle.classList.add('card-title');
+                  miNodoTitle.textContent = info.nombre;
+     
+                  const miNodoImagen = document.createElement('img');
+                  miNodoImagen.classList.add('img-fluid');
+                  miNodoImagen.setAttribute('src', info.imagen);
+                  
+                  const miNodoPrecio = document.createElement('p');
+                  miNodoPrecio.classList.add('card-text');
+                  miNodoPrecio.textContent = '$'+ info.precio;
+
+                  const miNodoBoton = document.createElement('button');
+                  miNodoBoton.classList.add('btn', 'btn-primary');
+                  miNodoBoton.textContent = '+';
+                  miNodoBoton.setAttribute('marcador', info.id);
+                  miNodoBoton.addEventListener('click', anyadirProductoAlCarrito);
+
+                  miNodoCardBody.appendChild(miNodoImagen);
+                  miNodoCardBody.appendChild(miNodoTitle);
+                  miNodoCardBody.appendChild(miNodoPrecio);
+                  miNodoCardBody.appendChild(miNodoBoton);
+                  miNodo.appendChild(miNodoCardBody);
+                  DOMitems.appendChild(miNodo);
+              });
+          }
+
+    
+          function anyadirProductoAlCarrito(evento) {
+
+              carrito.push(evento.target.getAttribute('marcador'))
+
+              calcularTotal();
+
+              renderizarCarrito();
+
+          } 
+
+
+          function renderizarCarrito() {
+
+              DOMcarrito.textContent = '';
+
+              const carritoSinDuplicados = [...new Set(carrito)];
+
+              carritoSinDuplicados.forEach((item) => {
+                  const miItem = baseDeDatos.filter((itemBaseDatos) => {
+                      return itemBaseDatos.id === parseInt(item);
+                  });
+
+                  const numeroUnidadesItem = carrito.reduce((total, itemId) => {
+                      return itemId === item ? total += 1 : total;
+                  }, 0);
+
+                  const miNodo = document.createElement('li');
+                  miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
+                  miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - ${miItem[0].precio}$`;
+                  const miBoton = document.createElement('button');
+                  miBoton.classList.add('btn', 'btn-danger', 'mx-5');
+                  miBoton.textContent = 'X';
+                  miBoton.style.marginLeft = '1rem';
+                  miBoton.dataset.item = item;
+                  miBoton.addEventListener('click', borrarItemCarrito);
+                  miNodo.appendChild(miBoton);
+                  DOMcarrito.appendChild(miNodo);
+              });
+          }
+
+
+          function borrarItemCarrito(evento) {
+              const id = evento.target.dataset.item;
+              carrito = carrito.filter((carritoId) => {
+                  return carritoId !== id;
+              });
+              renderizarCarrito();
+              calcularTotal();
+          }
+          function calcularTotal() {
+
+              total = 0;
+
+              carrito.forEach((item) => {
+
+                  const miItem = baseDeDatos.filter((itemBaseDatos) => {
+                      return itemBaseDatos.id === parseInt(item);
+                  });
+                  total = total + miItem[0].precio;
+              });
+
+              DOMtotal.textContent = total.toFixed(2);
+          }
+
+
+          function vaciarCarrito() {
+              carrito = [];
+              renderizarCarrito();
+              calcularTotal();
+          }
+
+
+          DOMbotonVaciar.addEventListener('click', vaciarCarrito);
+
+          renderizarProductos();
+
+
+        } 
+    </script>
+    </script>
+    
+    
+</head>
+
+<body>
+    <div id="header"></div>
+
+   
+    <div class="container">
+        <aside>
+            <h2 class="text-secondary">Filtro</h2>
+            <h5 class="text-secondary"> Por categoria</h5>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline1">Rubia</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline2">Negra</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline1">Weisbier</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline1">Ambar</label>
+              </div>
+              
+          </aside>
+          <br>
+
+        <div class="row">
+   
+            <main id="items" class="col-sm-8 row"></main>
+    
+            <aside class="col-sm-4">
+                <h2 class="text-secondary">Tus Compras</h2>
+   
+                <ul id="carrito" class="list-group"></ul>
+                <hr>
+  
+                <p class="text-right">Total: <span id="total"></span>$</p>
+                <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>
+                <a href="index.html" onclick="alerta()" id="boton-vaciar" class="btn btn-success">Comprar</a>
+            </aside>
+        </div>
+    </div>
+
+    <br><br><hr>
+    <div id="footer"></div>
+
+    <script>
+        function alerta(){
+
+            alert('Compra realizada!');
+        }
+
+    </script>
+</body>
+
+</html>
