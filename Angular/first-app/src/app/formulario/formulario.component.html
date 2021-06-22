@@ -1,0 +1,60 @@
+
+
+<div class="container col-12">
+    <br>
+<form [formGroup]="formularioContacto" (ngSubmit)="ingresar()">
+
+        <div class="card  bg-light mb-3 col-4">
+            <div class="card-header">
+                <h4 class="card-title">Formulario de productos</h4>
+              </div>
+                <div class="card-body">
+            
+                <div class="col-2">
+                <p>Codigo:
+                    <input type="text" formControlName="codigo">
+                </p>
+                <p>Nombre:
+                    <input type="text" formControlName="nombre">
+                </p>
+                <p>Precio:
+                    <input type="number" formControlName="precio">
+                </p>
+                <p>Stock:
+                    <input type="number" formControlName="stock">
+                </p>
+                </div>
+                <div class="d-grid gap-2 d-md-block">
+                    <div class="d-grid gap-2 d-md-block">
+                        <button class="btn btn-outline-primary my-1" type="submit" >Ingresar</button>
+                        <button class="btn btn-outline-success" type="reset">Limpiar</button>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+
+</form>
+<hr>
+
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  *ngFor="let producto of productos">
+            <th>{{producto.codigo}}</th>
+            <th>{{producto.nombre}}</th>
+            <th>{{producto.precio}}</th>
+            <th>{{producto.stock}}</th>
+        </tr>
+
+    </tbody>
+ 
+</table>
+</div>
