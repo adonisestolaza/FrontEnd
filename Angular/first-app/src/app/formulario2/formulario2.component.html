@@ -1,0 +1,44 @@
+<div class="container">
+    <form [formGroup]="formulario" (ngSubmit)="enviar()">
+        <div class="card  bg-light col">
+            <div class="card-header">
+                <h4 class="card-title">Formulario de productos</h4>
+            </div>
+            <div class="card-body">
+                <div class="col-2">
+                <p>Rut:
+                    <input type="text" formControlName="rut">
+                </p>
+                <p>Nombre:
+                    <input type="text" formControlName="nombre">
+                </p>
+                <div formGroupName="notas">
+                    <p> Ingrese nota 1:
+                        <input type="text" formControlName="nota1">
+                    </p>
+                    <p> Ingrese nota 2:
+                        <input type="text" formControlName="nota2">
+                    </p>
+                    <p> Ingrese nota 3:
+                        <input type="text" formControlName="nota3">
+                    </p>
+                    <p> Ingrese nota 4:
+                        <input type="text" formControlName="nota4">
+                    </p>
+                </div>
+                <p>Ingrese nota Examen:
+                    <input type="text" formControlName="examen">
+                </p>
+                <p>
+                    <button class="btn btn-success" type="submit">Enviar</button>
+                </p>
+                <div>
+                    <p class="alert alert-success" *ngFor="let nota of notas"> notas: {{nota}}</p>
+                    <p class="alert alert-success">{{nota_final}}</p>
+                    <p class="alert alert-warning">Salida: {{salida}}</p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </form>
+</div>

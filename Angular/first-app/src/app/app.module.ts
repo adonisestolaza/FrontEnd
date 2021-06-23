@@ -9,6 +9,7 @@ import { OpcionesComponent } from './opciones/opciones.component';
 import {FormsModule } from '@angular/forms'
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormularioComponent } from './formulario/formulario.component';
+import { Formulario2Component } from './formulario2/formulario2.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FormularioComponent } from './formulario/formulario.component';
     FirstComponentComponent,
     AzarComponent,
     OpcionesComponent,
-    FormularioComponent
+    FormularioComponent,
+    Formulario2Component
   ],
   imports: [
     BrowserModule,

@@ -11,7 +11,7 @@ export class FormularioComponent {
 
   productos= [];
 
-  formularioContacto = new FormGroup({
+  formularioProducto = new FormGroup({
     codigo: new FormControl(''),
     nombre: new FormControl(''),
     precio: new FormControl(''),
@@ -19,8 +19,7 @@ export class FormularioComponent {
     });
 
     ingresar(){
-      
-      this.productos.push(this.formularioContacto.value);
+      this.productos.push(this.formularioProducto.value);
     }
 
 

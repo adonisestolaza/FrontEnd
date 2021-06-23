@@ -1,10 +1,10 @@
 
 
-<div class="container col-12">
+<div class="container">
     <br>
-<form [formGroup]="formularioContacto" (ngSubmit)="ingresar()">
+<form [formGroup]="formularioProducto" (ngSubmit)="ingresar()">
 
-        <div class="card  bg-light mb-3 col-4">
+        <div class="card  bg-light ">
             <div class="card-header">
                 <h4 class="card-title">Formulario de productos</h4>
               </div>
@@ -18,10 +18,10 @@
                     <input type="text" formControlName="nombre">
                 </p>
                 <p>Precio:
-                    <input type="number" formControlName="precio">
+                    <input type="number" formControlName="precio" min="1" >
                 </p>
                 <p>Stock:
-                    <input type="number" formControlName="stock">
+                    <input type="number" formControlName="stock" min="1">
                 </p>
                 </div>
                 <div class="d-grid gap-2 d-md-block">
